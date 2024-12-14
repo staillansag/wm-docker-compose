@@ -1,0 +1,57 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    volumes:
+      - ./zookeeper/zookeeper.properties:/etc/kafka/zookeeper.properties
+      - ./ssl:/etc/kafka/secrets
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+      # Bind Kafka to both internal and external listeners
+      KAFKA_LISTENERS: SASL_SSL://0.0.0.0:9093,INTERNAL://0.0.0.0:29092
+
+      # Advertise internal and external listeners
+      KAFKA_ADVERTISED_LISTENERS: SASL_SSL://localhost:9093,INTERNAL://kafka:29092
+
+      # Security protocol mapping
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,SASL_SSL:SASL_SSL
+
+      # TLS Settings
+      KAFKA_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/kafka.broker.keystore.jks
+      KAFKA_SSL_KEYSTORE_FILENAME: kafka.broker.keystore.jks
+      KAFKA_SSL_KEYSTORE_PASSWORD_FILE: /etc/kafka/secrets/password  
+      KAFKA_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/kafka.broker.truststore.jks
+      KAFKA_SSL_TRUSTSTORE_PASSWORD_FILE: /etc/kafka/secrets/password  
+      KAFKA_SSL_KEY_PASSWORD_FILE: /etc/kafka/secrets/password  
+      KAFKA_SSL_KEY_CREDENTIALS: password
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: password
+
+      # SASL Settings
+      KAFKA_SASL_ENABLED_MECHANISMS: SCRAM-SHA-512
+      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: SCRAM-SHA-512
+      KAFKA_SASL_JAAS_CONFIG: |
+        org.apache.kafka.common.security.scram.ScramLoginModule required
+        username="admin"
+        password="password";
+
+      # KAFKA_OPTS for JVM options (including JAAS and SSL settings)
+      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/secrets/jaas.conf -Djavax.net.ssl.trustStore=/etc/kafka/secrets/kafka.broker.truststore.jks -Djavax.net.ssl.trustStorePassword=password -Djavax.net.ssl.keyStore=/etc/kafka/secrets/kafka.broker.keystore.jks -Djavax.net.ssl.keyStorePassword=password"
+    volumes:
+      - ./kafka/server.properties:/etc/kafka/server.properties
+      - ./ssl:/etc/kafka/secrets
+    depends_on:
+      - zookeeper
+

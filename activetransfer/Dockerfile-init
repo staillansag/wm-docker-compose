@@ -1,0 +1,37 @@
+FROM registry.access.redhat.com/ubi9/ubi:latest AS builder
+
+RUN yum -y update ;\
+    yum -y install \
+        procps \
+        ;\
+    yum clean all ;\
+    rm -rf /var/cache/yum ;\
+    useradd -u 1724 -m -g 0 -d /opt/webmethods wm
+
+RUN chmod 770 /opt/webmethods && mkdir /opt/updatemanager && chown wm:root /opt/updatemanager && mkdir /opt/source && chown wm:root /opt/source
+ADD --chown=wm:root startContainer.sh /opt/source/startContainer.sh
+ADD --chown=wm:root installer.bin /opt/source/installer.bin
+ADD --chown=wm:root at.script /opt/source/at.script
+ADD --chown=wm:root licenses /opt/source/licenses
+ADD --chown=wm:root SAGUpdateManagerInstaller.bin /opt/source/SAGUpdateManagerInstaller.bin
+RUN chmod u+x /opt/source/*.bin 
+
+USER wm
+
+RUN /opt/source/installer.bin -readScript /opt/source/at.script
+
+#RUN /opt/source/SAGUpdateManagerInstaller.bin --accept-license -d /opt/updatemanager
+#RUN /opt/updatemanager/bin/UpdateManagerCMD.sh 
+
+USER root 
+
+RUN cp /opt/source/startContainer.sh /opt/webmethods/IntegrationServer/bin/startContainer.sh && chmod +x /opt/webmethods/IntegrationServer/bin/startContainer.sh
+ENV INSTANCE_NAME=default
+
+USER wm
+
+EXPOSE 5555
+EXPOSE 9999
+EXPOSE 5553
+
+ENTRYPOINT "/bin/bash" "-c" "/opt/webmethods/IntegrationServer/bin/startContainer.sh"

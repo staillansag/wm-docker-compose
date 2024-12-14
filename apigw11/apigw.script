@@ -1,0 +1,27 @@
+#Tue Oct 15 00:35:38 PDT 2024
+IntegrationServerDBblock=0
+IntegrationServersecurePort=__VERSION1__,5543
+IntegrationServerDBUser.Name=__VERSION1__,
+IntegrationServerdiagnosticPort=__VERSION1__,9999
+com.wm.distman.utils_panel1=0
+ISExtOrInt=__VERSION1__,2,0,1_,External+RDBMS,Embedded+database
+IntegrationServerNetworkInterface=__VERSION1__,
+YAITitleTextBlock=0
+IntegrationServerDBURL.Name=__VERSION1__,
+IntegrationServerPool.Name=__VERSION1__,
+HostName=itzvm-698000ggku-q95xmmtk-vm.fyre.ibm.com
+adminPassword=manage
+YAIHttpPort=__VERSION1__,9072
+ServerURL=https\://sdc.webmethods.io/cgi-bin/dataservewebM111.cgi
+IntegrationServerDBPass.Name=__VERSION1__,
+IntegrationServerNetworkInterfaceBlock=0
+IntegrationServerPort=__VERSION1__,5555
+IntegrationServerDBMsgblock=1
+IntegrationServer.RDBMS.Type=__VERSION1__,6,0_,1,2,3,4,5,Oracle,SQL+Server,DB2+for+Linux%2C+UNIX%2C+Windows,MySQL+Community+Edition,MySQL+Enterprise+Edition,PostgreSQL
+IntegrationServerTitleBlock=0
+InstallDir=/opt/webmethods
+IntegrationServerNetworkInterfaceBodyBlock=0
+changeAdminPasswordAtFirstLogin=false
+YAIHttpsPort=__VERSION1__,9073
+IntegrationServerSampleURLBlock=1
+com.wm.distman.utils_panel0=0

@@ -1,0 +1,11 @@
+services:        
+  microgateway11:
+    image: $MCGW11_IMAGE
+    container_name: microgateway11     
+    platform: linux/amd64     
+    env_file:
+      - microgateway11/mcgw.config
+    ports:
+      - "$MCGW11_PORT:9090"
+      - "$MCGWTLS11_PORT:9093"
+

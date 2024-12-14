@@ -1,0 +1,15 @@
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.108.0
+    command: [ "--config=/etc/otel-collector.yaml" ]
+    container_name: otel-collector
+    environment:
+      - ZONEINFO=/etc/time/zoneinfo.zip
+    volumes:
+      - ./otelcollector/otel-collector.yaml:/etc/otel-collector.yaml
+      - ./otelcollector/logs:/etc/logs
+      - ./otelcollector/zoneinfo.zip:/etc/time/zoneinfo.zip
+      - msr-logs:/etc/msr-logs:ro
+      - apigw-logs:/etc/apig-logs:ro
+
+volumes:

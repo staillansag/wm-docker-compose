@@ -1,0 +1,24 @@
+services:        
+  mft:
+    image: wm-at:10.15
+    container_name: mft     
+    platform: linux/amd64
+    ports:
+      - "35555:5555"
+      - "35543:5543"
+      - "39999:9999"
+      - "9100:9100"
+      - "8000-8020:8000-8020"
+    volumes:
+      - $HOME/shared:/opt/shared
+      - $HOME/licenses/msr-license.xml:/opt/webmethods/IntegrationServer/instances/default/config/licenseKey.xml
+      - $HOME/licenses/msr-license.xml:/opt/webmethods/IntegrationServer/config/licenseKey.xml
+      - $HOME/licenses/at-license.xml:/opt/webmethods/IntegrationServer/packages/WmMFT/config/licenseKey.xml
+      - $HOME/licenses/at-license.xml:/opt/webmethods/IntegrationServer/instances/default/packages/WmMFT/config/licenseKey.xml
+      - ./activetransfer/application.properties:/opt/webmethods/IntegrationServer/instances/default/application.properties
+  sqlserver:
+    image: quay.io/staillanibm/sqlserver4wm:10.15-20240723
+    container_name: sqlserver  
+    ports:
+      - "1433:1433" 
+

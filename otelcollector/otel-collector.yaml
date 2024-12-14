@@ -1,0 +1,95 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: otel-collector:4317
+      http:
+        endpoint: otel-collector:4318
+        cors:
+          allowed_origins:
+            - "http://*"
+            - "https://*"
+
+  filelog/msr:
+    include: [ /etc/msr-logs/server.log ]
+    start_at: end
+    operators:
+      - type: regex_parser
+        regex: '^(?P<timefield>[^\[]+)\[(?P<component>[\w\W]+)\.(?P<facility>[\w]+)\.(?P<errorNumber>[\w]+)(?P<sev>[\w])\]\s*(?:\(tid=(?P<threadId>[^\)]+)\))?\s*(?P<msg>(?:\[\s*traceId=(?P<traceId>\w+)\s*spanId=(?P<spanId>\w+))?.*)$'
+        timestamp:
+          parse_from: attributes.timefield
+          layout: '%Y-%m-%d %H:%M:%S %Z '
+          location: Europe/Paris
+        severity:
+          parse_from: attributes.sev
+          mapping:
+            error4: C
+            error: E
+            info: I
+            debug: D
+            trace: T
+            warn: W
+            fatal: F
+      - type: trace_parser
+        trace_id:
+          parse_from: attributes.traceId
+        span_id:
+          parse_from: attributes.spanId
+      - type: remove
+        field: attributes.timefield
+      - type: remove
+        field: attributes.sev
+      - type: remove
+        field: attributes.spanId
+      - type: move
+        from: attributes.msg
+        to: body
+      - type: add
+        field: attributes.source
+        value: msr
+    resource:
+      service.name: "msr"
+
+exporters:  
+  file/traces:
+    path: /etc/logs/otlpTraces.json
+
+  file/metrics:
+    path: /etc/logs/otlpMetrics.json
+
+  file/logs:
+    path: /etc/logs/otlpLogs.json
+
+  logging:
+    loglevel: debug
+
+  otlp/tempo:
+    endpoint: "http://tempo:4317"
+    tls:
+      insecure: true
+
+  otlp/jaeger: 
+    endpoint: http://jaeger:4317
+    tls:
+      insecure: true
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [file/traces, logging, otlp/tempo, otlp/jaeger]
+    metrics: 
+      receivers: [otlp]
+      exporters: [file/metrics]
+    logs/msr:
+      receivers: [filelog/msr]
+      exporters: [file/logs]
+    logs:
+      receivers: [otlp]
+      exporters: [file/logs]

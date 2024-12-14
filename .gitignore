@@ -1,0 +1,11 @@
+backup
+.DS_Store
+*.bin
+*.pem
+*.key
+*.crt
+*.jks
+*.jar
+ca-key
+msr/build/wpm
+licenses

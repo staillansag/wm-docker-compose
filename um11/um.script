@@ -1,0 +1,27 @@
+#Tue Oct 15 05:16:56 PDT 2024
+NUM.Interface.Binding.ID=__VERSION1__,6,0_,1,2,3,4,5,ALL,10.89.0.1,10.88.0.1,9.46.72.183,10.21.103.88,127.0.0.1,ALL
+SPMHttpPort=__VERSION1__,8092
+SPMTitleTextBlock=0
+NUM.Data.Dir.ID=__VERSION1__,%2Fopt%2Fwebmethods%2FUniversalMessaging%2Fserver%2Fumserver
+SPMHttpsPort=__VERSION1__,8093
+NUM.Realm.Server.Name.ID=__VERSION1__,umserver
+SPMConfigPanelPortsNotification=1
+com.wm.distman.utils_panel1=0
+SPMGeneralDescriptionTextBlock=0
+NUMRegCheckbox=__VERSION1__,1,0,Register+Windows+service%2FUNIX+daemon+for+automatic+startup
+NUM.Purpose.ID=__VERSION1__,2,0_,1,New+installation,Side-by-side+installation+for+upgrade
+NUM.Instance.Create.ID=__VERSION1__,1,0_,Create+Server+Instance
+NUM.Profile.ID=__VERSION1__,3,0_,1,2,webMethods+suite+use+cases+%28large+messages%2C+transactions%2C+persistence%29,Standalone+use+cases+%28small+messages%2C+non-transactional%2C+transient+data%29,Custom
+HostName=itzvm-698000ggku-q95xmmtk-vm.fyre.ibm.com
+adminPassword=manage
+ServerURL=https\://sdc.webmethods.io/cgi-bin/dataservewebM111.cgi
+SPMUsingCC=__VERSION1__,1,0,Plan+to+use+Command+Central
+SPMAppOrService=__VERSION1__,1,0,Register+Windows+service%2FUNIX+daemon+for+automatic+startup+of+Platform+Manager
+NUM.Product.Name.ID=0
+com.wm.distman.utils_separator0=0
+InstallDir=/opt/webmethods
+changeAdminPasswordAtFirstLogin=false
+NUM.Profile.Custom.file=__VERSION1__,
+com.wm.distman.utils_panel0=0
+SPMAdditionalInfoDescriptionTextBlock=0
+NUM.Interface.Port.ID=__VERSION1__,9000

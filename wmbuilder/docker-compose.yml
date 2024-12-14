@@ -1,0 +1,12 @@
+services:        
+  wmbuilder:
+    build:
+      context: .
+      dockerfile: ./wmbuilder/Dockerfile
+    stdin_open: true 
+    tty: true        
+    container_name: wmbuilder     
+#    platform: linux/amd64
+    volumes:
+      - $HOME/shared:/opt/shared
+

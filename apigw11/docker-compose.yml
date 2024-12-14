@@ -1,0 +1,21 @@
+services:
+  apigw11:
+    image: $APIGW11_IMAGE
+    container_name: apigw11
+    ports:
+      - "$APIGW11_PORT:5555"
+      - "$APIGWTLS11_PORT:5543"
+      - "$APIGWUI11_PORT:9072"
+    volumes:
+      - apigw11-config-data:/opt/softwareag/IntegrationServer/instances/default/config
+      - apigw11-logs:/opt/softwareag/IntegrationServer/instances/default/logs
+    environment:
+      - apigw_elasticsearch_hosts=elastic11:9200
+      - apigw_kibana_dashboardInstance=http://kibana11:5601
+    depends_on:
+      elastic11:
+        condition: service_healthy
+
+
+volumes:
+  apigw11-config-data:

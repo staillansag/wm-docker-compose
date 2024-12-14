@@ -1,0 +1,19 @@
+services:
+  umserver:
+    image: $UM_IMAGE
+    container_name: umserver
+    ports:
+      - "9000:9000"
+      - "9200:9200"
+    volumes:
+      - um-data-volume:/opt/softwareag/UniversalMessaging/server/umserver/data
+      - um-conf-volume:/opt/softwareag/common/conf
+      - $HOME/licenses/um-license.xml:/opt/softwareag/UniversalMessaging/server/umserver/licence/licence.xml:ro
+    healthcheck:
+      interval: 5s
+      retries: 12
+      test: ["CMD-SHELL", "curl --silent http://localhost:9000/health/ | grep -q '\"ServerStatus\":\"OK\"'"]
+
+volumes:
+  um-data-volume:
+  um-conf-volume:

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<IDataXMLCoder version="1.0">
+  <record javaclass="com.wm.data.ISMemDataImpl">
+    <array name="StreamingConfiguration" type="record" depth="1">
+      <record javaclass="com.wm.data.ISMemDataImpl">
+        <value name="name">sttKafka_services_consumer</value>
+        <value name="description">sttKafka.services.consumer</value>
+        <value name="package">sttKafka</value>
+        <value name="type">Kafka</value>
+        <value name="host">your-confluent-cloud-bootstrap-uri</value>
+        <value name="clientId">IS6794916e8e</value>
+        <value name="publishMode">Synchronous</value>
+        <value name="other_properties">security.protocol=SASL_SSL
+client.dns.lookup=use_all_dns_ips
+sasl.mechanism=SCRAM-SHA-512
+and=admin
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='' password='';
+acks=all
+bootstrap.servers=
+session.timeout.ms=45000
+consumer=</value>
+        <value name="enabled">true</value>
+        <value name="useSSL">No</value>
+        <value name="truststoreAlias">ES_TRUSTSTORE</value>
+        <value name="keystoreAlias"></value>
+        <null name="keystoreKeyAlias"/>
+        <array name="subjects" type="record" depth="1">
+          <record javaclass="com.wm.data.ISMemDataImpl">
+            <value name="referenceId">TestEvent</value>
+            <value name="topicName">demo_events</value>
+            <record name="keyCoder" javaclass="com.wm.data.ISMemDataImpl">
+              <value name="type">STRING</value>
+              <value name="type_display">String</value>
+              <record name="parameters" javaclass="com.wm.data.ISMemDataImpl">
+                <array name="nameValue" type="record" depth="1">
+                  <record javaclass="com.wm.data.ISMemDataImpl">
+                    <value name="name">charsetName</value>
+                    <value name="value">UTF-8</value>
+                  </record>
+                </array>
+              </record>
+              <value name="charsetName">UTF-8</value>
+            </record>
+            <record name="valueCoder" javaclass="com.wm.data.ISMemDataImpl">
+              <value name="type">JSON</value>
+              <value name="type_display">JSON</value>
+              <record name="parameters" javaclass="com.wm.data.ISMemDataImpl">
+                <array name="nameValue" type="record" depth="1">
+                  <record javaclass="com.wm.data.ISMemDataImpl">
+                    <value name="name">charsetName</value>
+                    <value name="value">UTF-8</value>
+                  </record>
+                  <record javaclass="com.wm.data.ISMemDataImpl">
+                    <value name="name">documentTypeName</value>
+                    <value name="value">sttKafka.docTypes:TestEvent</value>
+                  </record>
+                  <record javaclass="com.wm.data.ISMemDataImpl">
+                    <value name="name">schema</value>
+                    <null name="value"/>
+                  </record>
+                </array>
+              </record>
+              <value name="documentTypeName">sttKafka.docTypes:TestEvent</value>
+              <value name="charsetName">UTF-8</value>
+              <null name="schema"/>
+            </record>
+            <value name="aliasName">sttKafka_services_consumer</value>
+          </record>
+        </array>
+      </record>
+    </array>
+  </record>
+</IDataXMLCoder>

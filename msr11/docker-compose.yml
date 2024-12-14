@@ -1,0 +1,30 @@
+services:
+  msr11:
+    container_name: msr11
+    image: ${MSR11_IMAGE}
+    ports:
+      - "${MSR11_PORT}:5555"
+    environment:
+      - SAG_IS_CONFIG_PROPERTIES=/opt/webmethods/IntegrationServer/application.properties
+      - SW_AGENT_COLLECTOR_ESTABLISH_CLOUD_COMMUNICATION=false
+      - SW_AGENT_EXTERNAL_ESTABLISH_COMMUNICATION=true
+      - SW_AGENT_OTEL_ENDPOINT=http://otel-collector:4318/v1/traces
+      - SW_AGENT_OTEL_HEADERS=Content-Type#application/x-protobuf
+      - SW_AGENT_EXT_SYSTEM_USER=
+      - SW_AGENT_EXT_SYSTEM_PASSWORD=
+      - SW_AGENT_EXTERNAL_SUPPORT_LONG_ID=false
+      - SW_AGENT_EXTERNAL_API_ERROR_CODES=502,503,504
+      - SW_AGENT_OTEL_RESOURCE_ATTRIBUTES=service.name#msr11-otel, service.namespace#default
+      - SW_AGENT_TRACE_TRANSFER_INTERVAL=1000
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./msr11/application.properties:/opt/webmethods/IntegrationServer/application.properties
+      - $HOME/shared/files:/files
+      - $HOME/git:/git    
+    depends_on:
+      - umserver11
+      - postgres
+
+volumes:
+

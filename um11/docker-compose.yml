@@ -1,0 +1,18 @@
+services:
+  umserver11:
+    image: $UM11_IMAGE
+    container_name: umserver11
+    ports:
+      - "$UM11_PORT:9000"
+      - "$UM11_METRICS:9200"
+    volumes:
+      - um11-data-volume:/opt/softwareag/UniversalMessaging/server/umserver/data
+      - um11-conf-volume:/opt/softwareag/common/conf
+    healthcheck:
+      interval: 5s
+      retries: 12
+      test: ["CMD-SHELL", "curl --silent http://localhost:$UM11_PORT/health/ | grep -q '\"ServerStatus\":\"OK\"'"]
+
+volumes:
+  um11-data-volume:
+  um11-conf-volume:

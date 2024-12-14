@@ -1,0 +1,13 @@
+services:
+  devportal11:
+    image: $DEVPORTAL11_IMAGE
+    container_name: devportal11
+    ports:
+      - "$DEVPORTAL11_PORT:8080"
+    environment:
+      - SPRING_ELASTICSEARCH_URIS=http://elastic11:9200
+    volumes:
+      - $HOME/licenses/dp-license.xml:/opt/softwareag/Licenses/DPO_License.xml:ro
+    depends_on:
+      elastic11:
+        condition: service_healthy

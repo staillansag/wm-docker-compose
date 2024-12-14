@@ -1,0 +1,7 @@
+#Fri Oct 11 13:02:34 UTC 2024
+installSP=N
+selectedFixes=wMFix.MFTServer_10.15.0.0011-0577
+empowerUser=stai@softwareag.com
+action=Install fixes from Empower
+installDir=/opt/webmethods
+empowerPwd=

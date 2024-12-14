@@ -1,0 +1,16 @@
+services:
+  keycloak:
+    image: $KEYCLOAK_IMAGE
+    container_name: keycloak
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=manage
+    ports:
+      - "$KEYCLOAK_PORT:8080"
+    command: start-dev
+    restart: unless-stopped
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+
+volumes:
+  keycloak_data:

@@ -1,0 +1,22 @@
+services:
+  apigw:
+    image: $APIGW_IMAGE
+    container_name: apigw
+    ports:
+      - "45555:5555"
+      - "45543:5543"
+      - "9072:9072"
+    volumes:
+      - $HOME/licenses/apigw-license.xml:/opt/softwareag/IntegrationServer/instances/default/config/licenseKey.xml:ro
+      - apigw-config-data:/opt/softwareag/IntegrationServer/instances/default/config
+      - apigw-logs:/opt/softwareag/IntegrationServer/instances/default/logs
+    environment:
+      - apigw_elasticsearch_hosts=elastic:9200
+      - apigw_kibana_dashboardInstance=http://kibana:5601
+    depends_on:
+      elastic:
+        condition: service_healthy
+
+
+volumes:
+  apigw-config-data:
