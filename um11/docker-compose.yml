@@ -1,13 +1,16 @@
 services:
-  umserver11:
-    image: $UM11_IMAGE
-    container_name: umserver11
+  umserver:
+    image: cp.icr.io/cp/webmethods/universalmessaging/universalmessaging-server:11.1.1
+#    image: softwareag/universalmessaging-server:10.15
+    container_name: umserver
     ports:
       - "$UM11_PORT:9000"
       - "$UM11_METRICS:9200"
     volumes:
       - um11-data-volume:/opt/softwareag/UniversalMessaging/server/umserver/data
       - um11-conf-volume:/opt/softwareag/common/conf
+#      - um-data-volume:/opt/softwareag/UniversalMessaging/server/umserver/data
+#      - um-conf-volume:/opt/softwareag/common/conf
     healthcheck:
       interval: 5s
       retries: 12
@@ -16,3 +19,5 @@ services:
 volumes:
   um11-data-volume:
   um11-conf-volume:
+#  um-data-volume:
+#  um-conf-volume:
